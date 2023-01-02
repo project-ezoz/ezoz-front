@@ -6,7 +6,6 @@ import { SearchInput } from "../components/Map/SearchInput";
 export const Map = () => {
   return (
     <>
-      <HeaderWrapper />
       <SearchInput />
       <MapPrint />
     </>
