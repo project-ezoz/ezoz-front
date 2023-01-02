@@ -2,9 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 export const GoogleButton = () => {
+  const handleAuthGoogle = () => {
+    window.location.href = import.meta.env.VITE_APP_API_URL2;
+  };
   return (
-    <GoogleLayout>
-      <GoogleIcon src="/public/images/g-logo.png" />
+    <GoogleLayout onClick={handleAuthGoogle}>
+      <GoogleIcon src="/images/g-logo.png" />
       구글로 3초만에 로그인하기
     </GoogleLayout>
   );
