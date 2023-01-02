@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GoogleButton } from "../components/Auth/GoogleButton";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { LoginContainer } from "../containers/LoginContainer";
+import { useAuthentication } from "../hooks/useAuthentication";
+import { useNavigate } from "react-router-dom";
 export const Auth = () => {
+  const isLoggedIn = useAuthentication();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/map");
+    }
+  }, [isLoggedIn]);
   return (
     <>
       <Helmet>
