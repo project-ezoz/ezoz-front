@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
+import { SpotButton } from "./SpotButton";
 export const MapPrint = () => {
   const defaultProps = {
     center: {
@@ -14,6 +15,7 @@ export const MapPrint = () => {
   };
   return (
     <MapLayout>
+      <SpotButton />
       <GoogleMapReact
         bootstrapURLKeys={{
           key: import.meta.env.VITE_APP_MAP_KEY,
