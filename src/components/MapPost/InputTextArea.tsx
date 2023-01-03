@@ -10,10 +10,9 @@ export const InputTextArea = () => {
     "underline",
     "strike",
     "blockquote",
-    "size",
+
     "list",
     "bullet",
-    "indent",
     "link",
     "image",
   ];
@@ -21,15 +20,9 @@ export const InputTextArea = () => {
     () => ({
       toolbar: {
         container: [
-          [{ size: ["small", false, "large", "huge"] }],
+          [{ header: [1, 2, 3, 4] }],
           ["bold", "italic", "underline", "strike", "blockquote"],
-          [
-            { list: "ordered" },
-            { list: "bullet" },
-            { indent: "-1" },
-            { indent: "+1" },
-            { align: [] },
-          ],
+          [{ list: "ordered" }, { list: "bullet" }, { align: [] }],
           ["image"],
         ],
       },
@@ -37,15 +30,15 @@ export const InputTextArea = () => {
     []
   );
   return (
-    <>
+    <div style={{ height: "650px" }}>
       <ReactQuill
-        style={{ height: "600px", color: "#fff", backgroundColor: "#2A2F3B" }}
+        style={{ height: "600px", color: "#000", backgroundColor: "#fff" }}
         modules={modules}
         formats={formats}
         placeholder="내용을 입력해주세요."
         theme="snow"
         value={contents}
       />
-    </>
+    </div>
   );
 };

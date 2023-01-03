@@ -21,7 +21,7 @@ const InputSection = styled.div`
 `;
 
 const Text = styled.label`
-  color: #fff;
+  color: #000;
   font-size: 15px;
   font-weight: 600;
 `;

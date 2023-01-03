@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ClearIcon from "@mui/icons-material/Clear";
+import axios from "axios";
+import { SEARCH_MARKER } from "../../api";
+import { useToken } from "../../hooks/useToken";
 export const SearchInput = () => {
   const [text, setText] = useState<string>("");
   const [searched, setSearched] = useState<string[]>([]);
+  const token = useToken();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
   };
@@ -11,6 +15,13 @@ export const SearchInput = () => {
     if (event.key === "Enter") {
       setSearched((prev) => [...prev, text]);
       setText("");
+      axios
+        .get(SEARCH_MARKER(text), {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => console.log(res));
     }
   };
   return (
