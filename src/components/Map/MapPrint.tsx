@@ -2,8 +2,20 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import { SpotButton } from "./SpotButton";
+import { Marker } from "./Marker";
 export const MapPrint = () => {
-  const [current, setCurrent] = useState<string>("");
+  const [api, setApi] = useState<boolean>(false);
+  const [map, setMap] = useState();
+  const [googlemaps, setGooglemaps] = useState();
+  const [lat, setLat] = useState<number>(0);
+  const [lng, setLng] = useState<number>(0);
+  const handleApiLoaded = (map: any, maps: any) => {
+    if (map && maps) {
+      setApi(true);
+      setMap(map);
+      setGooglemaps(maps);
+    }
+  };
   const defaultProps = {
     center: {
       lat: 37.49451137331156,
@@ -11,9 +23,11 @@ export const MapPrint = () => {
     },
     zoom: 11,
   };
-  const handleClick = (e: any) => {
-    console.log(e);
-    setCurrent(`${e.lat} ${e.lng}`);
+
+  const handleClick = (e: GoogleMapReact.ClickEventValue) => {
+    console.log(e.lat, e.lng);
+    setLat(e.lat);
+    setLng(e.lng);
   };
   return (
     <MapLayout>
@@ -22,13 +36,17 @@ export const MapPrint = () => {
         bootstrapURLKeys={{
           key: import.meta.env.VITE_APP_MAP_KEY,
           region: "kr",
+          libraries: ["geometry"],
         }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
         yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
         onClick={handleClick}
         onChange={(e) => console.log(e)}
-      ></GoogleMapReact>
+      >
+        <Marker lat={lat} lng={lng} text="Marker" />
+      </GoogleMapReact>
     </MapLayout>
   );
 };
