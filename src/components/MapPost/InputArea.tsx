@@ -4,13 +4,19 @@ import styled from "styled-components";
 interface Props {
   name: string;
   placeholder: string;
+  value: string;
 }
 
-export const InputArea = ({ name, placeholder }: Props) => {
+export const InputArea = ({ name, placeholder, value }: Props) => {
   return (
     <InputSection>
       <Text htmlFor="input">{name}</Text>
-      <Input id="input" placeholder={placeholder} type="text" />
+      <Input
+        id="input"
+        placeholder={placeholder}
+        type="text"
+        value={value && value}
+      />
     </InputSection>
   );
 };

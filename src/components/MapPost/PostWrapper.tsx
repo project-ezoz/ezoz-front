@@ -1,15 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import { useAppSelector } from "../../store/store";
 import { ApplyButton } from "./ApplyButton";
 import { DeleteButton } from "./DeleteButton";
 import { InputArea } from "./InputArea";
 import { InputTextArea } from "./InputTextArea";
 
 export const PostWrapper = () => {
+  const { lat, lng } = useAppSelector((state) => state.map);
+  console.log(lat, lng);
   return (
     <>
-      <InputArea name="제목" placeholder="제목을 입력해주세요." />
-      <InputArea name="위치" placeholder="위치를 등록해주세요." />
+      <InputArea name="제목" placeholder="제목을 입력해주세요." value={""} />
+      <InputArea
+        name="위치"
+        placeholder="위치를 등록해주세요."
+        value={`${lat.toString()} ${lng.toString()}`}
+      />
       <QuillSection>
         <InputTextArea />
       </QuillSection>

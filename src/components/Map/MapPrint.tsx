@@ -31,7 +31,7 @@ export const MapPrint = () => {
   const handleClick = (e: GoogleMapReact.ClickEventValue) => {
     setLat(e.lat);
     setLng(e.lng);
-    dispatch(setcenter({ lat: lat, lng: lng }));
+    dispatch(setcenter({ lat: e.lat, lng: e.lng }));
   };
   return (
     <MapLayout>
