@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import { SpotButton } from "./SpotButton";
 export const MapPrint = () => {
+  const [current, setCurrent] = useState<string>("");
   const defaultProps = {
     center: {
       lat: 37.49451137331156,
@@ -12,6 +13,7 @@ export const MapPrint = () => {
   };
   const handleClick = (e: any) => {
     console.log(e);
+    setCurrent(`${e.lat} ${e.lng}`);
   };
   return (
     <MapLayout>
