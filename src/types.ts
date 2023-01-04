@@ -3,3 +3,8 @@ export interface MarkerType {
   latlan: string;
   contents: string;
 }
+
+export interface CenterMarkerType {
+  lat: number;
+  lng: number;
+}

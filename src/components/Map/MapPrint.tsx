@@ -3,12 +3,16 @@ import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import { SpotButton } from "./SpotButton";
 import { Marker } from "./Marker";
+import { useAppDispatch } from "../../store/store";
+import { setcenter } from "../../store/mapSlice";
+
 export const MapPrint = () => {
   const [api, setApi] = useState<boolean>(false);
   const [map, setMap] = useState();
   const [googlemaps, setGooglemaps] = useState();
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
+  const dispatch = useAppDispatch();
   const handleApiLoaded = (map: any, maps: any) => {
     if (map && maps) {
       setApi(true);
@@ -25,9 +29,9 @@ export const MapPrint = () => {
   };
 
   const handleClick = (e: GoogleMapReact.ClickEventValue) => {
-    console.log(e.lat, e.lng);
     setLat(e.lat);
     setLng(e.lng);
+    dispatch(setcenter({ lat: lat, lng: lng }));
   };
   return (
     <MapLayout>

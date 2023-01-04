@@ -27,8 +27,7 @@ const Text = styled.label`
 `;
 
 const Input = styled.input`
-  background-color: #2a2f3b;
-  color: #fff;
+  color: #000;
   width: 400px;
   font-size: 20px;
 `;
