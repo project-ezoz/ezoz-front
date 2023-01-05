@@ -7,7 +7,7 @@ interface Props {
   value: string;
 }
 
-export const InputArea = ({ name, placeholder, value }: Props) => {
+export const InputPlace = ({ name, placeholder, value }: Props) => {
   return (
     <InputSection>
       <Text htmlFor="input">{name}</Text>
