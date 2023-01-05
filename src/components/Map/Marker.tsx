@@ -8,7 +8,7 @@ interface IMarker {
 export const Marker = ({ lat, lng, text }: IMarker) => {
   return (
     <img
-      src="/public/images/marker.png"
+      src="/images/marker.png"
       style={{ transform: "translate(-50%, -100%)" }}
     />
   );

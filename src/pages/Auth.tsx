@@ -35,7 +35,7 @@ export const Auth = () => {
 };
 
 const BackgroundImg = styled.div`
-  background-image: url("/public/images/auth.png");
+  background-image: url("/images/auth.png");
   width: 100%;
   height: 100vh;
   background-size: cover;
