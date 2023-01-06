@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import { SpotButton } from "./SpotButton";
 import { Marker } from "./Marker";
 import { useAppDispatch } from "../../store/store";
 import { setcenter } from "../../store/mapSlice";
+import axios from "axios";
+import { PlaceType } from "../../types";
+import { BlackMarker } from "./BlackMarker";
 
 export const MapPrint = () => {
   const [api, setApi] = useState<boolean>(false);
@@ -12,6 +15,8 @@ export const MapPrint = () => {
   const [googlemaps, setGooglemaps] = useState();
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
+  const [place, setPlace] = useState<PlaceType[]>([]);
+  const [target, setTarget] = useState<number>(0);
   const dispatch = useAppDispatch();
   const handleApiLoaded = (map: any, maps: any) => {
     if (map && maps) {
@@ -33,6 +38,18 @@ export const MapPrint = () => {
     setLng(e.lng);
     dispatch(setcenter({ lat: e.lat, lng: e.lng }));
   };
+
+  const markerClick = (e: any) => {
+    console.log(e);
+    setTarget(e);
+  };
+
+  useEffect(() => {
+    axios.get("/src/test.json").then((res) => {
+      console.log(res.data);
+      res.data.data.map((item: any) => setPlace((prev) => [...prev, item]));
+    });
+  }, []);
   return (
     <MapLayout>
       <SpotButton />
@@ -47,9 +64,19 @@ export const MapPrint = () => {
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
         onClick={handleClick}
-        onChange={(e) => console.log(e)}
+        onChildClick={markerClick}
       >
         <Marker lat={lat} lng={lng} text="Marker" />
+        {place.map((marker, idx) => (
+          <BlackMarker
+            key={marker.id}
+            id={marker.id}
+            lat={parseFloat(marker.lat)}
+            lng={parseFloat(marker.lng)}
+            text={marker.content}
+            target={marker.id === target}
+          />
+        ))}
       </GoogleMapReact>
     </MapLayout>
   );
