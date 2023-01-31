@@ -7,7 +7,7 @@ interface Props {
   setTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const InputTitle = ({ name, placeholder, title, setTitle }: Props) => {
+export const InputText = ({ name, placeholder, title, setTitle }: Props) => {
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };

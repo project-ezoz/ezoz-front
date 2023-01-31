@@ -1,17 +1,19 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../../store/store";
 import { ApplyButton } from "./ApplyButton";
 import { DeleteButton } from "./DeleteButton";
 import { InputPlace } from "./InputPlace";
 import { InputTextArea } from "./InputTextArea";
-import { InputTitle } from "./InputTitle";
+import { InputText } from "./InputText";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { getAddressFromLatLng } from "../../hooks/geocode";
 
 export const PostWrapper = () => {
   const { lat, lng } = useAppSelector((state) => state.map);
   const [title, setTitle] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [imgSrc, setImgSrc] = useState<string[]>([]);
   const onChooseImg = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,13 +34,23 @@ export const PostWrapper = () => {
   const handleDeleteImg = (id: number) => {
     setImgSrc(imgSrc.filter((_, index) => index !== id));
   };
+  useEffect(async () => {
+    const res = await getAddressFromLatLng(lat, lng);
+    setAddress(res);
+  }, []);
   return (
     <>
-      <InputTitle
+      <InputText
         name="제목"
         placeholder="제목을 입력해주세요."
         title={title}
         setTitle={setTitle}
+      />
+      <InputText
+        name="주소"
+        placeholder="주소를 입력해주세요."
+        title={address}
+        setTitle={setAddress}
       />
       <InputPlace
         name="위치"
