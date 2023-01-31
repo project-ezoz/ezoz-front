@@ -8,6 +8,7 @@ interface IMarker {
   text: string;
   target: boolean;
 }
+
 export const BlackMarker = ({ id, lat, lng, text, target }: IMarker) => {
   return <Marker src="/images/blackmarker.png" />;
 };

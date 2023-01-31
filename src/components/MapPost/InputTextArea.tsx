@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -29,16 +30,5 @@ export const InputTextArea = () => {
     }),
     []
   );
-  return (
-    <div style={{ height: "650px" }}>
-      <ReactQuill
-        style={{ height: "600px", color: "#000", backgroundColor: "#fff" }}
-        modules={modules}
-        formats={formats}
-        placeholder="내용을 입력해주세요."
-        theme="snow"
-        value={contents}
-      />
-    </div>
-  );
+  return <TextField sx={{ width: "400px" }} multiline rows={10} />;
 };

@@ -6,6 +6,7 @@ import { DeleteButton } from "./DeleteButton";
 import { InputPlace } from "./InputPlace";
 import { InputTextArea } from "./InputTextArea";
 import { InputTitle } from "./InputTitle";
+import { UploadImage } from "./UploadImage";
 
 export const PostWrapper = () => {
   const { lat, lng } = useAppSelector((state) => state.map);
@@ -24,6 +25,7 @@ export const PostWrapper = () => {
         value={`${lat.toString()} ${lng.toString()}`}
       />
       <QuillSection>
+        <UploadImage />
         <InputTextArea />
       </QuillSection>
       <ButtonSection>

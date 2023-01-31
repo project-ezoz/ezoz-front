@@ -65,6 +65,7 @@ export const MapPrint = () => {
         onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
         onClick={handleClick}
         onChildClick={markerClick}
+        onChange={(e) => console.log(e)}
       >
         <Marker lat={lat} lng={lng} text="Marker" />
         {place.map((marker, idx) => (
