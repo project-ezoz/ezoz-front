@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import { LoginContainer } from "../containers/LoginContainer";
 import { useAuthentication } from "../hooks/useAuthentication";
 import { useNavigate } from "react-router-dom";
+import { HeaderWrapper } from "../components/Header/HeaderWrapper";
 export const Auth = () => {
   const isLoggedIn = useAuthentication();
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export const Auth = () => {
       <Helmet>
         <title>EZOZ | Login</title>
       </Helmet>
+      <HeaderWrapper color="white" />
       <BackgroundImg>
         <TitleText>일상과 다른 새로운 경험을 찾는</TitleText>
         <TitleText>사람들을 위한 오지 컨텐츠 서비스</TitleText>
@@ -37,7 +39,7 @@ export const Auth = () => {
 const BackgroundImg = styled.div`
   background-image: url("/images/auth.png");
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

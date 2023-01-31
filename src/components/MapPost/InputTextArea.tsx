@@ -1,34 +1,20 @@
 import { TextField } from "@mui/material";
-import React, { useMemo, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-export const InputTextArea = () => {
-  const [contents, setContents] = useState<string>("");
-  const formats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
+import React from "react";
 
-    "list",
-    "bullet",
-    "link",
-    "image",
-  ];
-  const modules = useMemo(
-    () => ({
-      toolbar: {
-        container: [
-          [{ header: [1, 2, 3, 4] }],
-          ["bold", "italic", "underline", "strike", "blockquote"],
-          [{ list: "ordered" }, { list: "bullet" }, { align: [] }],
-          ["image"],
-        ],
-      },
-    }),
-    []
+interface Props {
+  content: string;
+  setContent: React.Dispatch<React.SetStateAction<string>>;
+}
+export const InputTextArea = ({ content, setContent }: Props) => {
+  const handleContent = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setContent(event.target.value);
+  };
+  return (
+    <TextField
+      sx={{ width: "400px" }}
+      multiline
+      rows={10}
+      onChange={handleContent}
+    />
   );
-  return <TextField sx={{ width: "400px" }} multiline rows={10} />;
 };

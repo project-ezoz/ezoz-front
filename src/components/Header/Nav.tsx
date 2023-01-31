@@ -14,9 +14,8 @@ export const Nav = ({ open, setOpen }: Props) => {
         <CloseIcon onClick={() => setOpen(!open)} fontSize="large" />
       </Close>
       <LinkWrapper>
-        {" "}
-        <Link to="/map">Map</Link>
-        <Link to="/posts">Posts</Link>
+        <Link to="/map">MAP</Link>
+        <Link to="/posts">POSTS</Link>
       </LinkWrapper>
     </NavWrapper>
   );
@@ -29,7 +28,7 @@ const NavWrapper = styled.div`
   right: -1px;
   top: 0;
   z-index: 11;
-  background-color: #ced4da;
+  background-color: #fff;
 `;
 const Close = styled.div`
   display: flex;
@@ -39,6 +38,7 @@ const Close = styled.div`
 const LinkWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 20px;
 `;
 const Link = styled(NavLink)`
   font-size: 30px;

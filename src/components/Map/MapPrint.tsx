@@ -8,8 +8,13 @@ import { setcenter } from "../../store/mapSlice";
 import axios from "axios";
 import { PlaceType } from "../../types";
 import { BlackMarker } from "./BlackMarker";
+import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 
 export const MapPrint = () => {
+  const [coordinates, setCoordinates] = useState({
+    lat: 37.49451137331156,
+    lng: 126.94584585059987,
+  });
   const [api, setApi] = useState<boolean>(false);
   const [map, setMap] = useState();
   const [googlemaps, setGooglemaps] = useState();
@@ -30,7 +35,7 @@ export const MapPrint = () => {
       lat: 37.49451137331156,
       lng: 126.94584585059987,
     },
-    zoom: 11,
+    zoom: 15,
   };
 
   const handleClick = (e: GoogleMapReact.ClickEventValue) => {
@@ -44,15 +49,41 @@ export const MapPrint = () => {
     setTarget(e);
   };
 
+  const handleCurrentPlace = () => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        setCoordinates({ lat: latitude, lng: longitude });
+        setLat(latitude);
+        setLng(longitude);
+      }
+    );
+  };
+
+  const handleChangeCenter = (event: GoogleMapReact.ChangeEventValue) => {
+    setCoordinates({ lat: event.center.lat, lng: event.center.lng });
+  };
+
   useEffect(() => {
     axios.get("/src/test.json").then((res) => {
       console.log(res.data);
       res.data.data.map((item: any) => setPlace((prev) => [...prev, item]));
     });
   }, []);
+
   return (
     <MapLayout>
       <SpotButton />
+      <GpsFixedIcon
+        sx={{
+          position: "absolute",
+          zIndex: "10",
+          top: "750px",
+          cursor: "pointer",
+          marginLeft: "10px",
+        }}
+        fontSize="large"
+        onClick={handleCurrentPlace}
+      />
       <GoogleMapReact
         bootstrapURLKeys={{
           key: import.meta.env.VITE_APP_MAP_KEY,
@@ -61,11 +92,12 @@ export const MapPrint = () => {
         }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
+        center={{ lat: coordinates.lat, lng: coordinates.lng }}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
         onClick={handleClick}
         onChildClick={markerClick}
-        onChange={(e) => console.log(e)}
+        onChange={handleChangeCenter}
       >
         <Marker lat={lat} lng={lng} text="Marker" />
         {place.map((marker, idx) => (

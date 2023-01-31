@@ -16,6 +16,7 @@ export const Map = () => {
   // }, [isLoggedIn]);
   return (
     <>
+      <HeaderWrapper color="black" />
       <SearchInput />
       <MapPrint />
     </>
