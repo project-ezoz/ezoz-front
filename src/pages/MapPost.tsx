@@ -1,13 +1,20 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { PostWrapper } from "../components/MapPost/PostWrapper";
+
+import { ApplyContainer } from "../containers/ApplyContainer";
 
 export const MapPost = () => {
   return (
-    <PostSection>
-      <PostWrapper />
-    </PostSection>
+    <>
+      <Helmet>
+        <title>EZOZ | 등록</title>
+      </Helmet>
+      <PostSection>
+        <ApplyContainer />
+      </PostSection>
+    </>
   );
 };
 

@@ -6,11 +6,16 @@ import {
   POST_MARKER,
   PUT_MARKER,
 } from "../api";
+import { MarkerPostType } from "../types";
 
-export const postMarker = createAsyncThunk("marker/post", async () => {
-  const response = await axios.get(POST_MARKER());
-  return response.data;
-});
+export const postMarker = createAsyncThunk(
+  "marker/post",
+  async (newData: MarkerPostType) => {
+    const response = await axios.post(POST_MARKER, newData);
+    console.log(response);
+    return response.data;
+  }
+);
 
 export const deleteMarker = createAsyncThunk(
   "marker/delete",

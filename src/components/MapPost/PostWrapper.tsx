@@ -1,16 +1,20 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../../store/store";
-import { ApplyButton } from "./ApplyButton";
-import { DeleteButton } from "./DeleteButton";
 import { InputPlace } from "./InputPlace";
 import { InputTextArea } from "./InputTextArea";
 import { InputText } from "./InputText";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { getAddressFromLatLng } from "../../hooks/geocode";
+import axios from "axios";
+import { GET_S3_URL } from "../../api";
+import { MarkerPostType } from "../../types";
 
-export const PostWrapper = () => {
+interface PostProps {
+  postMarker: (newData: MarkerPostType) => void;
+}
+export const PostWrapper = ({ postMarker }: PostProps) => {
   const { lat, lng } = useAppSelector((state) => state.map);
   const [title, setTitle] = useState<string>("");
   const [address, setAddress] = useState<string>("");
@@ -31,12 +35,33 @@ export const PostWrapper = () => {
       reader.readAsDataURL(file);
     }
   };
+
   const handleDeleteImg = (id: number) => {
     setImgSrc(imgSrc.filter((_, index) => index !== id));
   };
-  useEffect(async () => {
-    const res = await getAddressFromLatLng(lat, lng);
-    setAddress(res);
+
+  const handleApply = async () => {
+    // const response = await axios.get(GET_S3_URL);
+    // const url = response.data;
+    // const key = new URL(url).pathname.split("/")[2];
+    const newData = {
+      address: address,
+      content: content,
+      latitude: lat.toString(),
+      longitude: lng.toString(),
+      markerImageKeys: [],
+      title: title,
+    };
+    postMarker(newData);
+    console.log("clcick");
+  };
+
+  useEffect(() => {
+    const func = async () => {
+      const res = await getAddressFromLatLng(lat, lng);
+      setAddress(res);
+    };
+    func();
   }, []);
   return (
     <>
@@ -92,8 +117,7 @@ export const PostWrapper = () => {
         <InputTextArea content={content} setContent={setContent} />
       </QuillSection>
       <ButtonSection>
-        <DeleteButton />
-        <ApplyButton />
+        <Button onClick={handleApply}>등록하기</Button>
       </ButtonSection>
     </>
   );
@@ -140,4 +164,10 @@ const ImgBox = styled.div`
   height: 100px;
   position: relative;
   margin: 10px;
+`;
+const Button = styled.div`
+  width: 150px;
+  font-size: 20px;
+  border: 1px solid black;
+  cursor: pointer;
 `;

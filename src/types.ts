@@ -16,3 +16,12 @@ export interface PlaceType {
   lng: string;
   content: string;
 }
+
+export interface MarkerPostType {
+  address: string;
+  content: string;
+  latitude: string;
+  longitude: string;
+  markerImageKeys: string[];
+  title: string;
+}
