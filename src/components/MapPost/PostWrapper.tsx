@@ -44,6 +44,7 @@ export const PostWrapper = ({ postMarker }: PostProps) => {
     // const response = await axios.get(GET_S3_URL);
     // const url = response.data;
     // const key = new URL(url).pathname.split("/")[2];
+    // axios put요청 url로
     const newData = {
       address: address,
       content: content,

@@ -19,8 +19,9 @@ const Button = styled.div`
   position: absolute;
   z-index: 10;
   margin: 10px;
+  border-radius: 5%;
   &:hover {
     cursor: pointer;
-    box-shadow: 1px 1px 1px #fff;
+    text-shadow: 2px 2px 2px gray;
   }
 `;

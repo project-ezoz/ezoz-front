@@ -5,11 +5,10 @@ interface IMarker {
   id: number;
   lat: number;
   lng: number;
-  text: string;
   target: boolean;
 }
 
-export const BlackMarker = ({ id, lat, lng, text, target }: IMarker) => {
+export const BlackMarker = ({ id, lat, lng, target }: IMarker) => {
   return <Marker src="/images/blackmarker.png" />;
 };
 

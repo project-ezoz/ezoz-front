@@ -25,3 +25,10 @@ export interface MarkerPostType {
   markerImageKeys: string[];
   title: string;
 }
+
+export interface BoundsType {
+  ne: CenterMarkerType;
+  nw: CenterMarkerType;
+  se: CenterMarkerType;
+  sw: CenterMarkerType;
+}

@@ -12,3 +12,4 @@ export const SEARCH_MARKER = (keyword: string) =>
   `${HOST}/marker/?keyword=${keyword}`;
 
 export const GET_S3_URL = `${HOST}/upload`;
+export const GET_MARKERS = `${HOST}/markers`;

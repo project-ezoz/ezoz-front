@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import { SpotButton } from "./SpotButton";
@@ -6,9 +6,10 @@ import { Marker } from "./Marker";
 import { useAppDispatch } from "../../store/store";
 import { setcenter } from "../../store/mapSlice";
 import axios from "axios";
-import { PlaceType } from "../../types";
+import { BoundsType, PlaceType } from "../../types";
 import { BlackMarker } from "./BlackMarker";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
+import { GET_MARKERS } from "../../api";
 
 export const MapPrint = () => {
   const [coordinates, setCoordinates] = useState({
@@ -22,6 +23,13 @@ export const MapPrint = () => {
   const [lng, setLng] = useState<number>(0);
   const [place, setPlace] = useState<PlaceType[]>([]);
   const [target, setTarget] = useState<number>(0);
+  const [zoom, setZoom] = useState<number>(15);
+  const [bounds, setBounds] = useState<BoundsType>({
+    ne: { lat: 0, lng: 0 },
+    nw: { lat: 0, lng: 0 },
+    se: { lat: 0, lng: 0 },
+    sw: { lat: 0, lng: 0 },
+  });
   const dispatch = useAppDispatch();
   const handleApiLoaded = (map: any, maps: any) => {
     if (map && maps) {
@@ -35,7 +43,7 @@ export const MapPrint = () => {
       lat: 37.49451137331156,
       lng: 126.94584585059987,
     },
-    zoom: 15,
+    zoom: zoom,
   };
 
   const handleClick = (e: GoogleMapReact.ClickEventValue) => {
@@ -45,7 +53,6 @@ export const MapPrint = () => {
   };
 
   const markerClick = (e: any) => {
-    console.log(e);
     setTarget(e);
   };
 
@@ -60,15 +67,30 @@ export const MapPrint = () => {
   };
 
   const handleChangeCenter = (event: GoogleMapReact.ChangeEventValue) => {
+    console.log(event);
+    setZoom(event.zoom);
+    setBounds({
+      ne: event.bounds.ne,
+      nw: event.bounds.nw,
+      se: event.bounds.se,
+      sw: event.bounds.sw,
+    });
     setCoordinates({ lat: event.center.lat, lng: event.center.lng });
   };
 
-  useEffect(() => {
-    axios.get("/src/test.json").then((res) => {
-      console.log(res.data);
-      res.data.data.map((item: any) => setPlace((prev) => [...prev, item]));
-    });
-  }, []);
+  const handleSearchPlace = async () => {
+    if (zoom < 15) {
+      alert("지도가 너무 넓어요");
+    } else {
+      const res = await axios.post(GET_MARKERS, {
+        ne: bounds.ne,
+        nw: bounds.nw,
+        se: bounds.se,
+        sw: bounds.sw,
+      });
+      console.log(res);
+    }
+  };
 
   return (
     <MapLayout>
@@ -84,6 +106,7 @@ export const MapPrint = () => {
         fontSize="large"
         onClick={handleCurrentPlace}
       />
+      <SearchButton onClick={handleSearchPlace}>현 지도에서 검색</SearchButton>
       <GoogleMapReact
         bootstrapURLKeys={{
           key: import.meta.env.VITE_APP_MAP_KEY,
@@ -106,7 +129,6 @@ export const MapPrint = () => {
             id={marker.id}
             lat={parseFloat(marker.lat)}
             lng={parseFloat(marker.lng)}
-            text={marker.content}
             target={marker.id === target}
           />
         ))}
@@ -118,4 +140,24 @@ export const MapPrint = () => {
 const MapLayout = styled.div`
   width: 100%;
   height: 700px;
+`;
+
+const SearchButton = styled.div`
+  color: #000;
+  background-color: #00dc5f;
+  font-size: 15px;
+  font-weight: 800;
+  width: 150px;
+  text-align: center;
+  padding: 10px;
+  position: absolute;
+  z-index: 10;
+  margin: 10px;
+  top: 750px;
+  left: 450px;
+  border-radius: 5%;
+  &:hover {
+    cursor: pointer;
+    text-shadow: 2px 2px 2px gray;
+  }
 `;
