@@ -88,7 +88,12 @@ export const MapPrint = () => {
         se: bounds.se,
         sw: bounds.sw,
       });
-      console.log(res);
+      console.log(res.data);
+      if (res.data.length === 0) alert("검색 결과가 없습니다.");
+      else
+        res.data.map((value: PlaceType) =>
+          setPlace((prev) => [...prev, value])
+        );
     }
   };
 
@@ -125,11 +130,11 @@ export const MapPrint = () => {
         <Marker lat={lat} lng={lng} text="Marker" />
         {place.map((marker, idx) => (
           <BlackMarker
-            key={marker.id}
-            id={marker.id}
-            lat={parseFloat(marker.lat)}
-            lng={parseFloat(marker.lng)}
-            target={marker.id === target}
+            key={marker.markerId}
+            id={marker.markerId}
+            lat={marker.latitude}
+            lng={marker.longitude}
+            target={marker.markerId === target}
           />
         ))}
       </GoogleMapReact>

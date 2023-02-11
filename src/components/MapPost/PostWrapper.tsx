@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../../store/store";
-import { InputPlace } from "./InputPlace";
 import { InputTextArea } from "./InputTextArea";
 import { InputText } from "./InputText";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -20,8 +19,10 @@ export const PostWrapper = ({ postMarker }: PostProps) => {
   const [address, setAddress] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [imgSrc, setImgSrc] = useState<string[]>([]);
+  const [file, setFile] = useState<FileList>();
   const onChooseImg = async (event: ChangeEvent<HTMLInputElement>) => {
     const fileArr = event.target.files as FileList;
+    setFile(fileArr);
     let fileurls = [] as any[];
     let file;
     let filesLength = fileArr.length > 10 ? 10 : fileArr?.length;
@@ -44,7 +45,20 @@ export const PostWrapper = ({ postMarker }: PostProps) => {
     // const response = await axios.get(GET_S3_URL);
     // const url = response.data;
     // const key = new URL(url).pathname.split("/")[2];
-    // axios put요청 url로
+    // if (file) {
+    //   Array.from(file).forEach(
+    //     async (value) =>
+    //       await axios
+    //         .put(url, value, {
+    //           headers: {
+    //             "Content-Type": value.type,
+    //           },
+    //           withCredentials: false,
+    //         })
+    //         .then((res) => console.log(res))
+    //   );
+    // }
+
     const newData = {
       address: address,
       content: content,
@@ -54,7 +68,6 @@ export const PostWrapper = ({ postMarker }: PostProps) => {
       title: title,
     };
     postMarker(newData);
-    console.log("clcick");
   };
 
   useEffect(() => {
@@ -77,11 +90,6 @@ export const PostWrapper = ({ postMarker }: PostProps) => {
         placeholder="주소를 입력해주세요."
         title={address}
         setTitle={setAddress}
-      />
-      <InputPlace
-        name="위치"
-        placeholder="위치를 등록해주세요."
-        value={`${lat.toString()} ${lng.toString()}`}
       />
       <QuillSection>
         <ImgContainer>

@@ -10,11 +10,9 @@ export interface CenterMarkerType {
 }
 
 export interface PlaceType {
-  id: number;
-  title: string;
-  lat: string;
-  lng: string;
-  content: string;
+  markerId: number;
+  latitude: number;
+  longitude: number;
 }
 
 export interface MarkerPostType {
