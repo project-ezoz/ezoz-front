@@ -12,6 +12,7 @@ import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import { GET_MARKERS } from "../../api";
 
 export const MapPrint = () => {
+  // TODO : 중복되는 위경도 통일하기
   const [coordinates, setCoordinates] = useState({
     lat: 37.49451137331156,
     lng: 126.94584585059987,

@@ -42,7 +42,8 @@ export const PostWrapper = ({ postMarker }: PostProps) => {
   };
 
   const handleApply = async () => {
-    // const response = await axios.get(GET_S3_URL);
+    // TODO : 헤더에 로그인 토큰 실어서 보내보기
+    const response = await axios.get(GET_S3_URL);
     // const url = response.data;
     // const key = new URL(url).pathname.split("/")[2];
     // if (file) {
