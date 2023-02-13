@@ -10,11 +10,11 @@ export const Map = () => {
   const isLoggedIn = useAuthentication();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     navigate("/");
-  //   }
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn]);
   return (
     <>
       <Helmet>

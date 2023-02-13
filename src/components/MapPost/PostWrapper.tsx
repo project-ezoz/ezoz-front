@@ -9,7 +9,7 @@ import { getAddressFromLatLng } from "../../hooks/geocode";
 import axios from "axios";
 import { GET_S3_URL } from "../../api";
 import { MarkerPostType } from "../../types";
-
+import { POST_MARKER } from "../../api";
 interface PostProps {
   postMarker: (newData: MarkerPostType) => void;
 }
@@ -44,31 +44,33 @@ export const PostWrapper = ({ postMarker }: PostProps) => {
   const handleApply = async () => {
     // TODO : 헤더에 로그인 토큰 실어서 보내보기
     const response = await axios.get(GET_S3_URL);
-    // const url = response.data;
-    // const key = new URL(url).pathname.split("/")[2];
-    // if (file) {
-    //   Array.from(file).forEach(
-    //     async (value) =>
-    //       await axios
-    //         .put(url, value, {
-    //           headers: {
-    //             "Content-Type": value.type,
-    //           },
-    //           withCredentials: false,
-    //         })
-    //         .then((res) => console.log(res))
-    //   );
-    // }
+    const url = response.data;
+    const key = new URL(url).pathname.split("/")[2];
+    if (file) {
+      Array.from(file).forEach(
+        async (value) =>
+          await axios
+            .put(url, value, {
+              headers: {
+                "Content-Type": value.type,
+              },
+              withCredentials: false,
+            })
+            .then((res) => console.log(res))
+      );
+    }
 
     const newData = {
       address: address,
       content: content,
-      latitude: lat.toString(),
-      longitude: lng.toString(),
-      markerImageKeys: [],
+      latitude: lat,
+      longitude: lng,
+      markerImageKeys: [key],
       title: title,
     };
-    postMarker(newData);
+    await axios.post(POST_MARKER, newData).then((res) => console.log(res));
+
+    // postMarker(newData);
   };
 
   useEffect(() => {

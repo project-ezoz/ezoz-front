@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^1.9.1",
     "@types/google-map-react": "^2.1.7",
     "@types/react-helmet": "^6.1.6",
+    "@types/redux-persist": "^4.3.1",
     "axios": "^1.2.2",
     "dotenv": "^16.0.3",
     "google-map-react": "^2.2.0",
@@ -27,6 +28,7 @@
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
+    "redux-persist": "^6.0.0",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {

@@ -18,8 +18,8 @@ export interface PlaceType {
 export interface MarkerPostType {
   address: string;
   content: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   markerImageKeys: string[];
   title: string;
 }

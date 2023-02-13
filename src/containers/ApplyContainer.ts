@@ -7,6 +7,7 @@ import { MarkerPostType } from "../types";
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   postMarker: (newData: MarkerPostType) =>
     dispatch(postMarker(newData)).then((res) => {
+      console.log(res);
       console.log("data id: ", res.payload);
     }),
 });
