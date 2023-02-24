@@ -157,10 +157,10 @@ const SearchButton = styled.div`
   text-align: center;
   padding: 10px;
   position: absolute;
-  z-index: 10;
-  margin: 10px;
-  top: 750px;
-  left: 450px;
+  z-index: 5;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 5%;
   &:hover {
     cursor: pointer;
