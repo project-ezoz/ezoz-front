@@ -43,34 +43,34 @@ export const PostWrapper = ({ postMarker }: PostProps) => {
 
   const handleApply = async () => {
     // TODO : 헤더에 로그인 토큰 실어서 보내보기
-    const response = await axios.get(GET_S3_URL);
-    const url = response.data;
-    const key = new URL(url).pathname.split("/")[2];
+    let markerImgKey: string[] = [];
     if (file) {
-      Array.from(file).forEach(
-        async (value) =>
-          await axios
-            .put(url, value, {
-              headers: {
-                "Content-Type": value.type,
-              },
-              withCredentials: false,
-            })
-            .then((res) => console.log(res))
-      );
+      for (let value of Array.from(file)) {
+        const response = await axios.get(GET_S3_URL);
+        const url = response.data;
+        const key = new URL(url).pathname.split("/")[1];
+        await axios
+          .put(url, value, {
+            headers: {
+              "Content-Type": value.type,
+            },
+            withCredentials: false,
+          })
+          .then(() => {
+            markerImgKey.push(key);
+          });
+      }
+
+      const newData = {
+        address: address,
+        content: content,
+        latitude: lat,
+        longitude: lng,
+        markerImageKeys: markerImgKey,
+        title: title,
+      };
+      postMarker(newData);
     }
-
-    const newData = {
-      address: address,
-      content: content,
-      latitude: lat,
-      longitude: lng,
-      markerImageKeys: [key],
-      title: title,
-    };
-    await axios.post(POST_MARKER, newData).then((res) => console.log(res));
-
-    // postMarker(newData);
   };
 
   useEffect(() => {
